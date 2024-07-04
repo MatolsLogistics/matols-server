@@ -146,10 +146,10 @@ USE_TZ = True
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^https://\w+\matols-logistics-services-6e660bee869e.herokuapp\.com$",
+    r"^https://\w+\matols.herokuapp\.com$",
 ]
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000", "https://matols-logistics-services-6e660bee869e.herokuapp.com/"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000", "https://matols-logistics-services-6e660bee869e.herokuapp/"]
 
 # storage settings 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
