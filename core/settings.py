@@ -19,7 +19,7 @@ SECRET_KEY = config("SECRET_KEY", cast=str)
 # SECURITY WARNING: don"t run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool, default=True)
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "https://matols-logistics-services-6e660bee869e.herokuapp.com/",]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "matols-logistics-services-6e660bee869e.herokuapp.com",]
 
 
 # Application definition
