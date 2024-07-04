@@ -8,6 +8,7 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from booking.pagination import Paginator
+from decouple import config
 
 from booking.serializer import (CreateBookingSerializer, 
                                 RetrieveBookingSerializer, 
@@ -228,15 +229,17 @@ class ComputeLocationDistance(APIView):
         if(isinstance(pickup_dropoff_routes, list)):
 
               # // init client      
-            client = googlemaps.Client(key = "AIzaSyDNQ2E3_QP13cen-7laSH3QHl3gkDPlTLg")
+            client = googlemaps.Client(key = config("GOOGLE_API_KEY", cast=str))
             
             startRoutes, endRoutes = list(), list()
 
             for index in range(len(pickup_dropoff_routes) - 1):
                 
                 # routes 
-                startRoutes.append((pickup_dropoff_routes[index]["lat"], pickup_dropoff_routes[index]["lng"]))
-                endRoutes.append((pickup_dropoff_routes[index + 1]["lat"], pickup_dropoff_routes[index + 1]["lng"]))
+                startRoutes.append((pickup_dropoff_routes[index]["lat"], 
+                                    pickup_dropoff_routes[index]["lng"]))
+                endRoutes.append((pickup_dropoff_routes[index + 1]["lat"], 
+                                  pickup_dropoff_routes[index + 1]["lng"]))
                 
                   #// check if theres something in the lists 
             if( len(startRoutes) > 0 and len(endRoutes) > 0): 
@@ -247,16 +250,17 @@ class ComputeLocationDistance(APIView):
                                         endRoutes,
                                         mode = "driving")
                          #// distance 
-                    dStance = 0.0
+                    distance_meters = 0.0
                                     #// forloop
                     for i in range(len(results["rows"])):
                         
                         # retrieve and sum distance 
-                        itemDistance = results["rows"][i]["elements"][i]["distance"]["value"] #//m 
-                        dStance += itemDistance
-                                    # compute
+                        route_distance_meters = results["rows"][i]["elements"][i]["distance"]["value"] #//m 
+                        distance_meters += route_distance_meters
+                    
+                    # respond
                     payload["message"] = "success"
-                    payload["distance"] = dStance/1000.0 # kms  
+                    payload["distance"] = distance_meters/1000.0 # kms  
                     return Response(payload, status=status.HTTP_200_OK)
             
                 except Exception as e:
