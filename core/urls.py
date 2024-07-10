@@ -20,8 +20,6 @@ urlpatterns = [
     path("feed/back/api/", include("feed_back.urls")),
     path("frequently/asked/questions/api/", include("frequently_asked_questions.urls")),
     path("contact/us/api/", include("contact_us.urls")),
-    
-    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 
