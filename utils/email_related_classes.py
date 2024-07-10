@@ -48,6 +48,10 @@ Matols Logistics Services
 Team
                 """
         return body
+    
+
+
+
     @property
     def cancelation_body(self):
         return f"""
@@ -109,9 +113,9 @@ Team
 
         email = EmailMultiAlternatives(
             self.header,
-            self.body,
+            self.get_body,
             settings.EMAIL_HOST_USER,
-            self.recipient_list
+            self.recipient_list,
             [settings.EMAIL_HOST_USER]
         )
         email.attach('invoice.docx',  docx_io.read(), 'application/docx')
@@ -130,7 +134,7 @@ Team
                 self.cancelation_header,
                 self.cancelation_body,
                 settings.EMAIL_HOST_USER,
-                self.recipient_list
+                self.recipient_list,
                 [settings.EMAIL_HOST_USER]
             )
 
