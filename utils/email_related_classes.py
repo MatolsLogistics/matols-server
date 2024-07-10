@@ -189,7 +189,7 @@ class UserCustomer:
                     [settings.EMAIL_HOST_USER]
                 )
         
-        email.attach_alternative(text_content, "text/html")  
+        email.attach_alternative(html, "text/html")  
         email.fail_silently = True
         email.send()
 
@@ -208,7 +208,7 @@ class UserCustomer:
                     [settings.EMAIL_HOST_USER]
                 )
         
-        email.attach_alternative(text_content, "text/html")  
+        email.attach_alternative(html, "text/html")  
         email.fail_silently = True
         email.send()
         
