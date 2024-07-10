@@ -25,7 +25,8 @@ class CreateBookingSerializer(serializers.ModelSerializer):
                    "base_amount",
                    "amount_due_customer",
                    "mid_month_discount",
-                   "loyal_customer_discount",)
+                   "loyal_customer_discount",
+                  )
 
         
 class RetrieveBookingSerializer(serializers.ModelSerializer):
@@ -54,7 +55,8 @@ class RetrieveBookingSerializer(serializers.ModelSerializer):
                    "base_amount",
                    "amount_due_customer",
                    "mid_month_discount",
-                   "loyal_customer_discount",)
+                   "loyal_customer_discount",
+                   "created_at",)
         
 class UpdateBookingSerializer(serializers.ModelSerializer):
 
@@ -69,4 +71,5 @@ class UpdateBookingSerializer(serializers.ModelSerializer):
                    "booking_canceled",
                    "pickup_dropoff_routes",
                    "booking_date",
-                   "booking_time",)
+                   "booking_time",
+                )

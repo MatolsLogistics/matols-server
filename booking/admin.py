@@ -25,6 +25,7 @@ class ModelAdminConfig(admin.ModelAdmin):
                        "created_at",)
     
     search_fields = ("vehicle_type", 
+                     "customer",
                      "id", )
     
     ordering = ("-created_at", )

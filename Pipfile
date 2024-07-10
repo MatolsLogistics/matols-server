@@ -26,6 +26,8 @@ cryptography = "==39.0.2"
 text-unidecode = "*"
 django-json-widget = "*"
 googlemaps = "==4.10.0"
+django-email = "*"
+docxtpl = "*"
 
 [dev-packages]
 

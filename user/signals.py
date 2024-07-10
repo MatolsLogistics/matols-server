@@ -5,18 +5,16 @@ from django.dispatch import receiver
 from django_rest_passwordreset.signals import reset_password_token_created
 from utils.constant_variables import website_url
 
+from utils.email_related_classes import UserCustomer
+
 # signals 
 @receiver(post_save, sender = User)
 def registered_user_signal(sender, instance = None, created = False, **kwargs):
 
     # if created 
     if created:
-        # get user complete name
-        full_user_name = "{0} {1}".format(str(instance.user_first_name).capitalize(), 
-                                              str(instance.user_surname).capitalize())
-        print(f"Welcome {full_user_name}")
-
-        #send to the customer a welcome email 
+        user_customer = UserCustomer(instance, "")
+        user_customer.send_welcome_message_email()
 
 
 # password reset 
@@ -33,14 +31,15 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     :param kwargs:
     :return:
     """
-
+    user_customer = UserCustomer(reset_password_token.user, reset_password_token.key)
+    user_customer.send_password_reset_email()
     # template data 
-    template_data = {
-        "user": reset_password_token.user,
-        "username": reset_password_token.user.user_first_name,
-        "email": reset_password_token.user.email,
-        "password_reset_url": f"{website_url}/password/reset/{reset_password_token.key}",
-    }
+    # template_data = {
+    #     "user": reset_password_token.user,
+    #     "username": reset_password_token.user.user_first_name,
+    #     "email": reset_password_token.user.email,
+    #     "password_reset_url": f"{website_url}/password/reset/{reset_password_token.key}",
+    # }
 
-    # render template 
+    # # render template 
     # send email 

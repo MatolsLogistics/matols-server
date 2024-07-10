@@ -68,7 +68,7 @@ class CreateBookingAPIVIEW(APIView):
         if (len(list(pickup_dropoff_routes)) < 2):
             # set payload and respond 
             payload["message"] = "Booking locations must atleast contain a pick up and drop off locations"
-             # Respond 
+            # Respond 
             return Response(payload, status=status.HTTP_400_BAD_REQUEST)
         
         # verify that the date is correct 
