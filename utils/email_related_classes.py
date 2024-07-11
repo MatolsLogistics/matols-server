@@ -128,8 +128,10 @@ Team
     def invoice_cancelation_email(self):
 
         if settings.DEBUG:
-            return
-        if self.booking.booking_canceled:
+            return False
+        
+        if(self.booking.booking_cancelation_email_sent == False and 
+            self.booking.booking_canceled):
             email = EmailMultiAlternatives(
                 self.cancelation_header,
                 self.cancelation_body,
@@ -141,6 +143,10 @@ Team
             # email.attach('invoice.docx',  docx_io.read(), 'application/docx')
             email.fail_silently = True
             email.send()
+
+            return True
+        return False 
+        
 
 
 class UserCustomer:

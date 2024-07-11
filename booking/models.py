@@ -36,6 +36,7 @@ class Booking(models.Model):
     # booking booleans 
     booking_completed = models.BooleanField(default=NO, choices=YES_NO_CHOICES, null = False, blank=False)
     booking_canceled = models.BooleanField(default=NO, choices = YES_NO_CHOICES, null = False, blank=False)
+    booking_cancelation_email_sent = models.BooleanField(default=NO, choices = YES_NO_CHOICES, null = False, blank=False)
 
     # booking date time 
     booking_date = models.DateField(null = True)

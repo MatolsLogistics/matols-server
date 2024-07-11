@@ -55,5 +55,7 @@ def pre_save_booking(sender, instance, *args, **kwargs):
 
         # generate_pdf()
         invoice = Invoice(booking=instance)
-        invoice.invoice_cancelation_email()
+        booking_cancelation_email_sent = invoice.invoice_cancelation_email()
         
+        # set 
+        instance.booking_cancelation_email_sent = booking_cancelation_email_sent
