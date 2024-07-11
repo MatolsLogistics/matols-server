@@ -22,6 +22,7 @@ class ModelAdminConfig(admin.ModelAdmin):
                        "customer_driver_note",
                        "payment_option",
                        "distance",
+                       "booking_cancelation_email_sent",
                        "created_at",)
     
     search_fields = ("vehicle_type", 
