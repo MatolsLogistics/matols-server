@@ -13,8 +13,9 @@ class ContactUs(models.Model):
     subject = models.CharField(default = '', max_length = 300, null=True, blank=True)
     message = models.CharField(default = '', max_length = 300, null=True, blank=True)
     responded  = models.BooleanField(default=NO, choices=YES_NO_CHOICES, null = False, blank=False)
-
-       # model date time  
+    respond = models.BooleanField(default=NO, choices=YES_NO_CHOICES, null = False, blank=False)
+    message_response = models.TextField(default = '', max_length = 2000, null=True, blank=True)
+    # model date time  
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 

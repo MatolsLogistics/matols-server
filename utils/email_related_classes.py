@@ -27,19 +27,19 @@ Summary:
 
 Description      Quantity
 ------------------------------------------
-Vehicle type   : {self.booking.vehicle_type}
-Helpers        : {self.booking.helpers}
-Floors         : {self.booking.floors}
-Payment Option : {self.booking.payment_option}
+Vehicle type: {self.booking.vehicle_type}
+Helpers: {self.booking.helpers}
+Floors: {self.booking.floors}
+Payment Option: {self.booking.payment_option}
 ------------------------------------------
 
 Description     Prices(ZAR)
 ------------------------------------------
-Base price             : {self.booking.base_amount}
-Middle month discount  : {self.booking.mid_month_discount}
-Loyal customer discount: {self.booking.loyal_customer_discount}
+Base price: R {self.booking.base_amount}
+Middle month discount: R -{self.booking.mid_month_discount}
+Loyal customer discount: R -{self.booking.loyal_customer_discount}
 ------------------------------------------
-Balance Due            : {self.booking.amount_due_customer}
+Balance Due: {self.booking.amount_due_customer}
 ------------------------------------------ 
  
 
@@ -220,5 +220,90 @@ class UserCustomer:
 
 
 
+class UserContactUs:
+
+    def __init__(self, instance) -> None:
+        self.instance = instance 
+        self.user_full_name = f"{instance.name} {instance.surname}"
+
+    @property
+    def header(self):
+        return "Matols Logistics Services"
+    @property
+    def body(self):
+        return f"""
+Dear {self.user_full_name}
+
+Thank you for contacting us. 
+One of our team members will respond to you shortly.
+
+Kind Regards
+Matols Logistics Services 
+Team
+
+"""
+    @property
+    def recepient_list(self):
+        return [self.instance.email, "eleric44@gmail.com", settings.EMAIL_HOST_USER]
+
+    def send_thank_you_email(self):
+
+        if(settings.DEBUG): return 
+             #.. send email 
+        email = EmailMultiAlternatives(
+                    self.header,
+                    self.body, 
+                    settings.EMAIL_HOST_USER,
+                    self.recepient_list,
+                    [settings.EMAIL_HOST_USER]
+                )
+        
+        email.fail_silently = True
+        email.send()
 
 
+    @property
+    def response_header(self):
+        return "Matols Logistics Services Question Response"
+
+    @property
+    def response_body(self):
+        return f"""
+Dear {self.user_full_name}
+
+Thank you for enquering with Matols Logistics Services.
+
+Your Question: {self.instance.message}
+Answer: {self.instance.message_response}
+
+Kind Regards
+Matols Logistics Services 
+Team
+
+"""
+
+    # response email 
+    def send_response_email(self):
+
+        if(settings.DEBUG): return False
+        if(self.instance.respond and 
+            len(list(str(self.instance.message_response))) > 0 and 
+                self.instance.responded == False):
+            #.. send email 
+            email = EmailMultiAlternatives(
+                        self.response_header,
+                        self.response_body, 
+                        settings.EMAIL_HOST_USER,
+                        self.recepient_list,
+                        [settings.EMAIL_HOST_USER]
+                    )
+            
+            email.fail_silently = True
+            email.send()
+
+            return True
+        return False 
+        
+            
+
+        
