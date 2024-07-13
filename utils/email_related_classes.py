@@ -4,8 +4,9 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 import io
-from docxtpl import DocxTemplate
+from docxtpl import DocxTemplate, InlineImage
 from .constant_variables import website_url
+from docx.shared import Mm
 
 
 class Invoice:
@@ -74,10 +75,11 @@ Team
     def cancelation_header(self):
         return "Booking Cancelation Invoice-{0}".format(self.booking.id)
     
-    @property
-    def get_dict(self):
+    def get_dict(self, doc):
         return {
             "id": self.booking.id,
+            "user_email": self.booking.customer.email, 
+            "logo": InlineImage(doc, "templates/src/invoice-logo.png", width=Mm(27.686), height=Mm(22.86)),
             "customer_full_name": self.customer_full_name,
             "user_contact_number": self.booking.customer.user_contact_number,
             "created_at": self.booking.created_at,
@@ -101,7 +103,7 @@ Team
     def send_invoice_email(self):
 
         doc = DocxTemplate('templates/invoice.docx')
-        doc.render(self.get_dict)
+        doc.render(self.get_dict(doc))
 
         if(settings.DEBUG):
             doc.save("templates/output.docx")
