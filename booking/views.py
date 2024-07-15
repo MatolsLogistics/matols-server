@@ -197,7 +197,8 @@ class ComputeQuoteAPIView(APIView):
         (base_amount, 
          mid_month_discount, 
          loyal_customer_discount, 
-         amount_due_customer) = compute_quote_instance.generate_quote
+         amount_due_customer, 
+         price_adjustment) = compute_quote_instance.generate_quote
      
         # prices
         request.data["id"] = -999
@@ -206,6 +207,7 @@ class ComputeQuoteAPIView(APIView):
         request.data["base_amount"] = float("%.0f"%round(base_amount))
         request.data["mid_month_discount"] = float("%.0f"%round( mid_month_discount))
         request.data["loyal_customer_discount"] = float("%.0f"%round(loyal_customer_discount))
+        request.data["price_adjustment"] = float("%.0f"%round(price_adjustment))
         request.data["amount_due_customer"] =   float("%.0f"%round(amount_due_customer))
     
         # respond 

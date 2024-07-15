@@ -11,7 +11,8 @@ class ComputeQuote:
                         floors: int, 
                         booking_date: any, 
                         distance: float, 
-                        user: User) -> None:
+                        user: User,
+                        price_adjustment: float = 0.0) -> None:
 
         #  initialize 
         self.user = user
@@ -20,6 +21,7 @@ class ComputeQuote:
         self.floors = floors 
         self.distance = distance
         self.booking_date = str(booking_date)
+        self.price_adjustment = float(price_adjustment)
 
         # variables 
         self.mid_month_discount_percentage: int = 5 # percent
@@ -72,17 +74,19 @@ class ComputeQuote:
                                                         (self.mid_month_discount_percentage/100.0))
             amount_due_customer = abs(self.base_amount - 
                                       generated_mid_month_discount_amount - 
-                                      generated_loyal_customer_discount_amount)
+                                      generated_loyal_customer_discount_amount + 
+                                      self.price_adjustment)
 
             # return 
             return (self.base_amount, 
                     generated_mid_month_discount_amount, 
                     generated_loyal_customer_discount_amount, 
-                    amount_due_customer)
+                    amount_due_customer, 
+                    self.price_adjustment)
         
         # return otherwise
         amount_due_customer = (self.base_amount - generated_loyal_customer_discount_amount)
-        return (self.base_amount, 0.0, generated_loyal_customer_discount_amount, amount_due_customer)
+        return (self.base_amount, 0.0, generated_loyal_customer_discount_amount, amount_due_customer, 0.0)
 
         
     

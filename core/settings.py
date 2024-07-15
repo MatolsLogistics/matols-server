@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "feed_back.apps.FeedBackConfig",
     "frequently_asked_questions.apps.FrequentlyAskedQuestionsConfig",
     "contact_us.apps.ContactUsConfig",
+
 ]
 
 MIDDLEWARE = [

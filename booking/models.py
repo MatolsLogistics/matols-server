@@ -29,6 +29,8 @@ class Booking(models.Model):
     mid_month_discount = models.FloatField(default = 0.0, null = True, blank = True)
     distance = models.FloatField(default = 0.0, null = True, blank = True)
     loyal_customer_discount = models.FloatField(default = 0.0, null = True, blank = True)
+    price_adjustment = models.FloatField(default = 0.0, null = True, blank = True)
+    price_adjustment_note = models.CharField(default = '', max_length = 1500, null=True, blank=True)
     
     # locations
     pickup_dropoff_routes = models.JSONField(null=True, blank=True, default=list)

@@ -39,16 +39,18 @@ def pre_save_booking(sender, instance, *args, **kwargs):
                                               floors= instance.floors,
                                               helpers= instance.helpers,
                                               user=instance.customer,
-                                              v_type=instance.vehicle_type)
+                                              v_type=instance.vehicle_type,
+                                              price_adjustment=instance.price_adjustment)
         # retrieve pricing
         (base_amount, 
          mid_month_discount, 
          loyal_customer_discount, 
-         amount_due_customer) = instance_compute_quote.generate_quote
+         amount_due_customer, price_adjustment) = instance_compute_quote.generate_quote
         
         # set the values float("%.0f"%round(customerQuote)) 
         instance.distance = rounded_distance
         instance.base_amount = float("%.0f"%round(base_amount))
+        instance.price_adjustment = float("%.0f"%round(price_adjustment))
         instance.mid_month_discount = float("%.0f"%round(mid_month_discount)) 
         instance.loyal_customer_discount = float("%.0f"%round(loyal_customer_discount))  
         instance.amount_due_customer = float("%.0f"%round(amount_due_customer)) 
